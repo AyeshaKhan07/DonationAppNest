@@ -28,5 +28,5 @@ export class AuthService {
         }
     }
 
-    async login ()
+    async login () {}
 }

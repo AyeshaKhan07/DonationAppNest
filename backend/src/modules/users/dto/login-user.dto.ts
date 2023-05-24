@@ -1,7 +1,7 @@
 import { MIN_LENGTHS } from 'src/constants';
 import { IsString, IsNotEmpty, MinLength } from 'class-validator';
 
-export class UpdateUserDto {
+export class LoginUserDto {
 
   @IsNotEmpty()
   @IsString()

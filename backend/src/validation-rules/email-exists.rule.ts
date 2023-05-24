@@ -26,7 +26,6 @@ import { Injectable } from '@nestjs/common';
   
   export function EmailNotExists(validationOptions?: ValidationOptions) {
     return function (object: object, propertyName: string) {
-        console.log(object.constructor, propertyName)
       registerDecorator({
         target: object.constructor,
         propertyName: propertyName,

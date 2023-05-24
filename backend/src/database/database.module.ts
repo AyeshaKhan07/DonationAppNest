@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 import { ConfigService } from "@nestjs/config";
 import { TypeOrmModule } from '@nestjs/typeorm';
 
@@ -16,7 +15,6 @@ interface DatabaseConfig {
 @Module({
     imports: [
         TypeOrmModule.forRootAsync({
-            // imports: [ConfigModule],
             useFactory: (configService: ConfigService) => ({
                 ...configService.get<DatabaseConfig>('database'),
                 entities: ["dist/modules/*/entity.js"],
