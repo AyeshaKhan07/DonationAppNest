@@ -1,9 +1,10 @@
-import { Inject } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 
 import { UserService } from "../users/service";
-import { CreateUserDto } from '../users/dto';
+import { matchPassword } from 'src/utils/bcrypt';
+import { CreateUserDto, LoginUserDto } from '../users/dto';
 
 export class AuthService {
     constructor(
@@ -14,7 +15,7 @@ export class AuthService {
     ) { }
 
     getCookieWithJwtToken(email: string) {
-        const token = this.tokenService.sign({email});
+        const token = this.tokenService.sign({ email });
         return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get('tokenExpireTime')}`;
     }
 
@@ -28,5 +29,24 @@ export class AuthService {
         }
     }
 
-    async login () {}
+    async login(user: LoginUserDto) {
+        const existedUser = await this.userService.findOneByEmail(user.email, true);
+        const passwordMatched = await matchPassword(user.password, existedUser.password);
+
+        if (existedUser && passwordMatched) {
+            delete existedUser.password;
+
+            const cookieWithToken = this.getCookieWithJwtToken(existedUser.email);
+
+            return { cookieWithToken, existedUser }
+        }
+
+        else throw new HttpException('Wrong credentials provided', HttpStatus.BAD_REQUEST);
+    }
+
+    logout() {
+        const logoutCookie = `Authentication=; HttpOnly; Path=/; Max-Age=0`;
+        
+        return logoutCookie
+    }
 }

@@ -17,9 +17,9 @@ export class UserService {
     return await this.userRepository.find();
   }
 
-  async findOneByEmail(email: string): Promise<User> {
+  async findOneByEmail(email: string, withPassword: Boolean = false): Promise<User> {
     const user = await this.userRepository.findOneBy({ email: email });
-    if(user) delete user.password;
+    if(user && !withPassword) delete user.password;
 
     return user
   }

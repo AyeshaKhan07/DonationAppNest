@@ -1,4 +1,5 @@
 import * as bcrypt from 'bcrypt';
+import { PASSWORD_ENCRYPTION_SALT_ROUNDS } from 'src/constants';
 
 
 export async function encryptTohashPassword(password: string) {
@@ -11,9 +12,9 @@ export async function encryptTohashPassword(password: string) {
         The salt used for hashing is a part of the result, so no need to keep it separately.
     */
 
-    return await bcrypt.hash(password, 10);
+    return await bcrypt.hash(password, PASSWORD_ENCRYPTION_SALT_ROUNDS);
 }
 
-export async function matchPassword(password: string, hashedPassword) {
+export async function matchPassword(password: string, hashedPassword: string) {
     return await bcrypt.compare(password, hashedPassword);
 }

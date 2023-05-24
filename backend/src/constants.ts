@@ -3,3 +3,5 @@ export enum MIN_LENGTHS {
     PASSWORD = 8,
     CONTACT = 10
 }
+
+export const PASSWORD_ENCRYPTION_SALT_ROUNDS = 10
