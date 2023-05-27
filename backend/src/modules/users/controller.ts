@@ -7,7 +7,7 @@ import {
   Put,
 } from '@nestjs/common';
 
-import { User } from './entity';
+import { User } from './user.entity';
 import { UserService } from './service';
 import { UpdateUserDto } from './dto/update-user.dto';
 

@@ -4,7 +4,7 @@ import { UsersController } from './controller';
 import { UserService } from './service';
 // import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './entity';
+import { User } from './user.entity';
 import { IsEmailNotExists } from 'src/validation-rules/email-exists.rule';
 // import { JwtModule } from '@nestjs/jwt';
 // import 'dotenv/config';
