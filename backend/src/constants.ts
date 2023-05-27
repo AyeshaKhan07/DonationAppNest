@@ -1,3 +1,5 @@
+export const JWT_KEY = process.env.JWT_KEY
+
 export enum MIN_LENGTHS {
     NAME = 2,
     PASSWORD = 8,
