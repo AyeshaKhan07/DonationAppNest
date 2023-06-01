@@ -16,7 +16,7 @@ interface DatabaseConfig {
         TypeOrmModule.forRootAsync({
             useFactory: (configService: ConfigService) => ({
                 ...configService.get<DatabaseConfig>('database'),
-                entities: ["dist/modules/*/entity.js"],
+                entities: ["dist/modules/*/*.entity.js"],
                 migrations: ["dist/migrations/*"]
             }),
             inject: [ConfigService],

@@ -9,11 +9,13 @@ import {
   import { AuthService } from './service';
   import { Response } from 'express';
 import { CreateUserDto, LoginUserDto } from '../users/dto';
+import { Public } from 'src/custom-decorators/public-route.decorator';
   
   @Controller()
   export class AuthController {
     constructor(private readonly authService: AuthService) { }
   
+    @Public()
     @Post('register')
     async registerUser(@Body() user: CreateUserDto, @Res() response: Response) {
       const { cookieWithToken, createdUser } = await this.authService.register(user);
@@ -22,6 +24,7 @@ import { CreateUserDto, LoginUserDto } from '../users/dto';
       return response.send(createdUser);
     }
     
+    @Public()
     @Post('login')
     @HttpCode(200)
     /*
@@ -34,6 +37,7 @@ import { CreateUserDto, LoginUserDto } from '../users/dto';
       return response.send(existedUser);
     }
 
+    @Public()
     @Get('logout')
     async logout(@Res() response: Response) {
       const logoutCookie = this.authService.logout();

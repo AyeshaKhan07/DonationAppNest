@@ -14,8 +14,8 @@ export class AuthService {
         private readonly configService: ConfigService
     ) { }
 
-    getCookieWithJwtToken(email: string) {
-        const token = this.tokenService.sign({ email });
+    getCookieWithJwtToken(id: Number, email: string) {
+        const token = this.tokenService.sign({ id, email });
         return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get('tokenExpireTime')}`;
     }
 
@@ -24,7 +24,7 @@ export class AuthService {
 
         const createdUser = await this.userService.findOneByEmail(user.email);
         if (createdUser) {
-            const cookieWithToken = this.getCookieWithJwtToken(createdUser.email);
+            const cookieWithToken = this.getCookieWithJwtToken(createdUser.id, createdUser.email);
             return { cookieWithToken, createdUser }
         }
     }
@@ -36,7 +36,7 @@ export class AuthService {
         if (existedUser && passwordMatched) {
             delete existedUser.password;
 
-            const cookieWithToken = this.getCookieWithJwtToken(existedUser.email);
+            const cookieWithToken = this.getCookieWithJwtToken(existedUser.id, existedUser.email);
 
             return { cookieWithToken, existedUser }
         }

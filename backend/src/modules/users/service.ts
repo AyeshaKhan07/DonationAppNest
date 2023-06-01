@@ -1,5 +1,5 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
@@ -20,6 +20,13 @@ export class UserService {
   async findOneByEmail(email: string, withPassword: Boolean = false): Promise<User> {
     const user = await this.userRepository.findOneBy({ email: email });
     if(user && !withPassword) delete user.password;
+
+    return user
+  }
+
+  async findById(id: number) {
+    const user = await this.userRepository.findOneBy({ id });
+    if(user) delete user.password;
 
     return user
   }

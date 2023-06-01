@@ -2,13 +2,9 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { useContainer } from 'class-validator';
 import { AppModule } from './app.module';
-import authentication from './middlewares/authentication';
-
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  
-  app.use(authentication)
-  
+    
   /* 
     enable validation globally, this is from NestJS docs 
   */
