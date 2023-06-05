@@ -4,6 +4,7 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 
 import { CreatePageDto } from './dto';
 import { Fundraiser } from './fundraiser.entity';
+import { User } from '../users/user.entity';
 
 @Injectable()
 export class FundraisersService {
@@ -12,10 +13,15 @@ export class FundraisersService {
     private readonly fundraiserRepository: Repository<Fundraiser>,
   ) { }
 
-  async create(page: CreatePageDto, userId: Number) {
+  async create(page: CreatePageDto, user: User) {
+
+    if(!user) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND)
+    }
+    
     const newPagePayload = {
         ...page,
-        user: userId
+        user: user
     }
     const newPage = this.fundraiserRepository.create(newPagePayload);
 
