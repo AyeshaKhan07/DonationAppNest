@@ -38,7 +38,7 @@ export class Fundraiser {
     })
     story: string
 
-    @ManyToOne(() => User, user => user.pages)
-    user: Number
+    @ManyToOne(() => User, user => user.pages, { nullable: false })
+    user: User
 
 }
